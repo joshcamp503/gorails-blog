@@ -6,9 +6,6 @@ class BlogPostsController < ApplicationController
   end
 
   def show 
-    # params comes from ApplicationController
-  rescue ActiveRecord::RecordNotFound
-      redirect_to root_path
   end
 
   def new
@@ -47,6 +44,9 @@ class BlogPostsController < ApplicationController
   end
 
   def set_blog_post
+    # params comes from ApplicationController
     @blog_post = BlogPost.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+      redirect_to root_path
   end
 end
