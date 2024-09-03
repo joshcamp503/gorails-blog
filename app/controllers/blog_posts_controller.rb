@@ -1,4 +1,7 @@
 class BlogPostsController < ApplicationController 
+
+  # must be signed in to hit every route except index and show
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_blog_post, except: [:index, :new, :create]
 
   def index
@@ -49,4 +52,9 @@ class BlogPostsController < ApplicationController
   rescue ActiveRecord::RecordNotFound
       redirect_to root_path
   end
+
+  #Example of devise's authenticate_user method that works 'under the hood'
+  #def authenticate_user
+  #  redirect_to new_user_session_path, alert: "You must sign in or sign up to continue." unless user_signed_in?
+  #end
 end
