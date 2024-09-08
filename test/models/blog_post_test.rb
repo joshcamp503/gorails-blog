@@ -3,40 +3,52 @@ require "test_helper"
 class BlogPostTest < ActiveSupport::TestCase
   test "draft? returns true for draft blog post" do
     # assert expects true
-    assert BlogPost.new(published_at: nil).draft?
+    assert draft_blog_post.draft?
   end
 
   test "draft? returns false for a published blog post" do
     # refute expects false
-    refute BlogPost.new(published_at: 1.year.ago).draft?
+    refute published_blog_post.draft?
   end
 
   test "draft? returns false for a scheduled blog post" do
     # refute expects false
-    refute BlogPost.new(published_at: 1.year.from_now).draft?
+    refute scheduled_blog_post.draft?
   end
 
   test "published? returns true for a published blog post" do
-    assert BlogPost.new(published_at: 1.year.ago).published?
+    assert published_blog_post.published?
   end
 
   test "published? returns false for a draft blog post" do
-    refute BlogPost.new(published_at: nil).published?
+    refute draft_blog_post.published?
   end
 
   test "published? returns false for a scheduled blog post" do
-    refute BlogPost.new(published_at: 1.year.from_now).published?
+    refute scheduled_blog_post.published?
   end
 
   test "scheduled? returns true for a scheduled blog post" do
-    assert BlogPost.new(published_at: 1.year.from_now).scheduled?
+    assert scheduled_blog_post.scheduled?
   end
   
   test "scheduled? returns false for a draft blog post" do
-    refute BlogPost.new(published_at: nil).scheduled?
+    refute draft_blog_post.scheduled?
   end
 
   test "scheduled? returns false for a published blog post" do
-    refute BlogPost.new(published_at: 1.year.ago).scheduled?
+    refute published_blog_post.scheduled?
+  end
+
+  def draft_blog_post
+    BlogPost.new(published_at: nil)
+  end
+
+  def published_blog_post
+    BlogPost.new(published_at: 1.year.ago)
+  end
+
+  def scheduled_blog_post
+    BlogPost.new(published_at: 1.year.from_now)
   end
 end
