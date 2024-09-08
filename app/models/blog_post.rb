@@ -2,8 +2,9 @@ class BlogPost < ApplicationRecord
   validates :title, presence: true
   validates :body, presence: true
 
-  # these lambda functions are SQL queries, thus the foreign syntax/?'
-  # in production, nulls are sorted differently and we must add NULLS LAST to our 
+  # these lambda functions are SQL queries, thus the foreign syntax'
+
+  # Different databases and version sort nulls differently so we must add NULLS LAST to our 
   # SQL query, but nulls last is not an option for the basic order command in ActiveRecord
   # so we use arel_table to get that extended functionality
   scope :sorted, -> { order(arel_table[:published_at].desc.nulls_last).order(updated_at: :desc) }
