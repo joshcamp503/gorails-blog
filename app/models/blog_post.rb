@@ -1,6 +1,8 @@
 class BlogPost < ApplicationRecord
+  has_rich_text :content
+
   validates :title, presence: true
-  validates :body, presence: true
+  validates :content, presence: true
 
   # these lambda functions are SQL queries, thus the foreign syntax'
 
